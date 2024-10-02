@@ -3,23 +3,24 @@ const mysql = require("mysql2/promise");
 const client = mysql.createPool(process.env.CONNECTION_STRING)
 
  async function selectUsers() {
-    const results = await client.query("SELECT * FROM usuarios:");
+    const results = await client.query("SELECT * FROM usuarios");
     return results[0];
 }
 
 async function selectUser(id) {
-    const results = await client.query("SELECT * FROM usuarios WHERE id=?", [id]);
-    return results[0];
+    const results = await client.query("SELECT * FROM usuarios WHERE uuid=?", [id]);
+    return results[0][0];
 }
 
 async function insertUser(user) {
-    const values = [user.uuid, user.name, user.squad,user.active];
-    await client.query("INSERT INTO usuarios(uuid,name,squad,active) VALUES(?,?,?,?)", values);
+    const values = [user.name, user.squad];
+    await client.query("INSERT INTO usuarios(name_,squad) VALUES(?,?)", values);
+    
 }
 
  async function updateUser(id, user) {
-    const values = [user.name, user.squad,user.active,id];
-    await client.query("UPDATE usuarios SET name=?,squad=?,active=? WHERE uuid=?", values);
+    const values = [user.squad,user.active,id];
+    await client.query("UPDATE usuarios SET squad=?,active_=? WHERE uuid=?", values);
 }
 
  async function deleteUser(id) {

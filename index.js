@@ -14,7 +14,7 @@ app.delete("/usuarios/:id", async (request, response) => {
     response.sendStatus(204);
 });
 
-app.path("/usuarios/:id", async (request, response) => {
+app.patch("/usuarios/:id", async (request, response) => {
     const id = parseInt(request.params.id);
     const user = request.body;
     await db.updateUser(id, user);
@@ -29,12 +29,12 @@ app.post("/usuarios/", async (request, response) => {
 
 app.get("/usuarios/:id", async (request, response) => {
     const id = parseInt(request.params.id);
-    const results = await db.selectUsers(id)
+    const results = await db.selectUser(id)
     response.json(results)
 });
 
 app.get("/usuarios", async (request, response) => {
-    const results = await db.selectUsers
+    const results = await db.selectUsers()
     response.json(results);
 });
 
